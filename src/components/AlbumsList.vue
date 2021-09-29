@@ -50,7 +50,7 @@ export default {
 
 .album-box{
   background-color: $myGrey;
-  padding: 25px;
+  padding: 20px 20px 10px 20px;
   margin-right: 40px;
   margin-bottom: 20px;
 }
