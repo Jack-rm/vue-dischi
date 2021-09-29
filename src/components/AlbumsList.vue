@@ -1,9 +1,11 @@
 <template>
   <div class="albums-container container">
     <div class="row row-cols-6">
+      
       <div v-for="(album, index) in albumsGroup" :key="index" class="album-box">
         <Album :albumItem="album"/>
       </div>
+    
     </div>
   </div>
 </template>
@@ -13,24 +15,25 @@ import axios from 'axios';
 import Album from './Album.vue'
 
 export default {
+  
   name: 'AlbumsList',
-  props: {
-    msg: String
-  },
+  props: {},
   components: {
     Album,
   },
+
   data: function() {
     return {
       albumsGroup: [],
       index: 0,
     }
   },
+  
   created: function(){
     axios.get('https://flynn.boolean.careers/exercises/api/array/music')
     .then((response) =>{
       this.albumsGroup = response.data.response;
-      console.log(this.albumsGroup);
+      // console.log(this.albumsGroup);
     })
   }
 
