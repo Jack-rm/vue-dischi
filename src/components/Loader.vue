@@ -1,17 +1,10 @@
 <template>
-  <div class="loader-item d-flex justify-content-center ">
+  <div class="loader-item d-flex justify-content-center align-items-center ">
         <div class="wave-load">
           <div></div>
           <div></div>
         </div>
-        <div class="wave-load">
-          <div></div>
-          <div></div>
-        </div>
-        <div class="wave-load">
-          <div></div>
-          <div></div>
-        </div>
+        <h1>{{ loadingMsg }}</h1>
   </div>
 </template>
 
@@ -26,6 +19,11 @@ export default {
 
 .loader-item{
     margin-top: 250px;
+
+    & h1{
+        color: white;
+        font-size: 2em;
+    }
 }
 
 .wave-load {

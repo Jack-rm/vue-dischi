@@ -9,7 +9,7 @@
 
     <div class="row" v-else>
       <div class="loader-wrapper">
-        <Loader />
+        <Loader loadingMsg="Loading ..." />
       </div>
     </div>
   </div>
