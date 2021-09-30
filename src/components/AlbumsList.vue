@@ -1,18 +1,24 @@
 <template>
   <div class="albums-container container">
-    <div class="row row-cols-6">
-      
+    
+    <div class="row row-cols-6" v-if="booleano">  
       <div v-for="(album, index) in albumsGroup" :key="index" class="album-box">
         <Album :albumItem="album"/>
       </div>
-    
+    </div>
+
+    <div class="row" v-else>
+      <div class="loader-wrapper">
+        <Loader />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import Album from './Album.vue'
+import Album from './Album.vue';
+import Loader from './Loader.vue'
 
 export default {
   
@@ -20,12 +26,15 @@ export default {
   props: {},
   components: {
     Album,
+    Loader,
   },
 
   data: function() {
     return {
       albumsGroup: [],
       index: 0,
+      booleano: false,
+      
     }
   },
   
@@ -34,6 +43,10 @@ export default {
     .then((response) =>{
       this.albumsGroup = response.data.response;
       // console.log(this.albumsGroup);
+
+      setTimeout(() =>{
+        this.booleano = true;
+      }, 2000);
     })
   }
 

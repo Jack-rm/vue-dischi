@@ -11,7 +11,7 @@
 
 <script>
 import AlbumsList from './components/AlbumsList.vue';
-import Header from './components/Header.vue'
+import Header from './components/Header.vue';
 
 
 export default {
