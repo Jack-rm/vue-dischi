@@ -1,8 +1,8 @@
 <template>
   <div class="albums-container container">
-    
-    <div class="row row-cols-6" v-if="booleano">  
-      <div v-for="(album, index) in albumsGroup" :key="index" class="album-box">
+
+    <div class="row row-cols-6" v-if="loadingStatus">  
+      <div class="album-box" v-for="(album, index) in filteredAlbumsGroup" :key="index">
         <Album :albumItem="album"/>
       </div>
     </div>
@@ -23,32 +23,57 @@ import Loader from './Loader.vue'
 export default {
   
   name: 'AlbumsList',
-  props: {},
+  props: {
+    selectedGenre : String,
+  },
   components: {
     Album,
     Loader,
   },
-
   data: function() {
     return {
-      albumsGroup: [],
       index: 0,
-      booleano: false,
+      loadingStatus: false,
+
+      albumsGroup: [],
+      genres: [],
       
     }
   },
-  
-  created: function(){
-    axios.get('https://flynn.boolean.careers/exercises/api/array/music')
-    .then((response) =>{
-      this.albumsGroup = response.data.response;
-      // console.log(this.albumsGroup);
+  computed: {
+    filteredAlbumsGroup() {
 
-      setTimeout(() =>{
-        this.booleano = true;
-      }, 2000);
+        if (this.selectedGenre === ""){
+          return this.albumsGroup;
+        }
+          return this.albumsGroup.filter(
+            (element) => element.genre === this.selectedGenre)
+    }
+
+  },
+
+  created: function(){
+    axios
+      .get('https://flynn.boolean.careers/exercises/api/array/music')
+      .then((response) =>{
+        this.albumsGroup = [...response.data.response]
+        // console.log(this.albumsGroup);
+
+        this.albumsGroup.forEach((element) => {
+          if (!this.genres.includes(element.genre)) {
+            this.genres.push(element.genre);
+          }
+
+        this.$emit("getGenres", this.genres);
+        
+        });
+        
+        setTimeout(() =>{
+          this.loadingStatus = true;
+        }, 2000);
     })
-  }
+  },
+
 
 }
 </script>
@@ -60,14 +85,14 @@ export default {
 @import '../style/variables.scss';
 
 .albums-container{
-  margin-top: 80px;
+  margin-top: 60px;
 
 }
 
 .album-box{
   background-color: $myGrey;
   padding: 20px 20px 10px 20px;
-  margin-right: 40px;
+  margin: 0px 20px;
   margin-bottom: 20px;
 }
 

@@ -3,7 +3,8 @@
 
     <Header />
     <main>
-      <AlbumsList />
+      <Select @updatedGenre="executeSearch" :genres="genres"/>
+      <AlbumsList @getGenres="storeGenres" :selectedGenre="genreNeedle" />
     </main>
   
   </div>
@@ -12,19 +13,34 @@
 <script>
 import AlbumsList from './components/AlbumsList.vue';
 import Header from './components/Header.vue';
-
+import Select from './components/Select.vue';
 
 export default {
   name: 'App',
+  data : function (){
+    return{
+      genres : [],
+      genreNeedle : '',
+    }
+  },
   components: {
-    AlbumsList,
     Header,
+    Select,
+    AlbumsList,
+  },
+  methods:{
+    storeGenres(genres){
+      this.genres = [...genres]
+    },
+
+    executeSearch(needle){
+      this.genreNeedle = needle;
+    }
   }
 }
 </script>
 
 <style lang="scss">
-
 @import 'style/general.scss';
 @import 'style/variables.scss';
 
@@ -37,4 +53,9 @@ export default {
 body{
   background-color: $mainBgColor;
 }
+
+main{
+  padding-top: 35px;
+}
+
 </style>
